@@ -14,17 +14,17 @@ function encryptFilesOrDirectories {
 		archName="$archFileName.tar"
 	fi
 
-	if [ -d $1 ]; then
+	# if [ -d $1 ]; then
 		# it's a directory
 		# change tar's dir to input directorys's parent path - do not add the parents to the archive
 		# -p for preserving file permissions
 		tar -C $(dirname "$1") -cpf $archName $archFileName
 		removeArch=1
-	elif [ -f $1 ]; then
-		# it's a file
-		tar -cpf $archName $archFileName
-		removeArch=1
-	fi
+	# elif [ -f $1 ]; then
+	# 	# it's a file
+	# 	tar -C $(dirname "$1") -cpf $archName $archFileName
+	# 	removeArch=1
+	# fi
 
 	echo $2 | gpg --batch -q --passphrase-fd 0 --cipher-algo AES256 -c $archName
 
